@@ -4,19 +4,13 @@ import com.db4o.*;
 
 public class BD {
 
-    private String basededatos = "JGZ.db4o";
+    private final String basededatos = "JGZ.db4o";
 
-    public void Prueba() {
+    public ObjectContainer conexion() {
+//EmbeddedConfiguration config = Db4oEmbedded.newConfiguration();
+        //config.common().objectClass(Canciones.class).cascadeOnDelete(true);
         ObjectContainer bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), basededatos);
-
-        try {
-            //metodos sobre la BD
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            bd.close();
-        }
+        return bd;
     }
 
 }

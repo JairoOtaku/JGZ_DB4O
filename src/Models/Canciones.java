@@ -1,4 +1,3 @@
-
 package Models;
 
 public class Canciones {
@@ -7,10 +6,9 @@ public class Canciones {
     private float Duracion;
     private Cantante cantante;
 
-    public Canciones(String Titulo, float Duracion, Cantante cantante) {
+    public Canciones(String Titulo, float Duracion) {
         this.Titulo = Titulo;
         this.Duracion = Duracion;
-        this.cantante = cantante;
     }
 
     @Override
