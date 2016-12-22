@@ -37,3 +37,4 @@ public class Controller {
 //        bd.store(c1);
 //    }
 }
+//http://panamahitek.com/crear-un-archivo-jar-con-librerias-externas/
