@@ -12,7 +12,7 @@ public class Consultas {
 
     }
 
-    public void insertCanciones(ObjectContainer bd) {
+    public void insertCanciones(ObjectContainer bd, String nombre, int duracion, Cantante cantante) {
 
     }
 
@@ -58,3 +58,12 @@ public class Consultas {
 
     }
 }
+
+//    jbutton.actionlistener (ObjectContainer bd) {
+//
+//        Canciones c1 = new canciones("", 123);
+//        Cantante canta1 = new cantante();
+//        c1.setcantante(canta1);
+//
+//        bd.store(c1);
+        //    }
