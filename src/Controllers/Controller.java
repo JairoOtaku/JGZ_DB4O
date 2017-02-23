@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.BD;
+import Models.Cantante;
 import Views.MainView;
 import Models.Consultas;
 import com.db4o.ObjectContainer;
@@ -22,8 +23,8 @@ public class Controller {
     }
 
     void iniciar() {
-
-        //consulta.insertCanciones(bd, "nombre", 14, cantaor);
+        Cantante cantaor = new Cantante("manuel", "Flamenco");
+        consulta.insertCanciones(bd, "nombre", 14, cantaor);
     }
 
 }

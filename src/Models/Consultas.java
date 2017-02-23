@@ -66,4 +66,4 @@ public class Consultas {
 //        c1.setcantante(canta1);
 //
 //        bd.store(c1);
-        //    }
+//    }
