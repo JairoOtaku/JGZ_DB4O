@@ -1,6 +1,9 @@
 package Models;
 
 import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+
+import java.util.ArrayList;
 
 public class Consultas {
 
@@ -8,8 +11,17 @@ public class Consultas {
     /**
      * ***********BASICO DE CANCIONES**************
      */
-    public void mostrarCanciones(ObjectContainer bd) {
-
+    /**
+     * Recogemos todas las canciones de la base de datos.
+     *
+     * @param bd ObjectContainer
+     * @return ArrayList<Canciones>
+     */
+    public ArrayList<Canciones> mostrarCanciones(ObjectContainer bd) {
+        ArrayList<Canciones> canciones = new ArrayList<>();
+        ObjectSet<Canciones> set = bd.queryByExample(new Canciones(null, 0));
+        set.forEach(canciones::add);
+        return canciones;
     }
 
     public void insertCanciones(ObjectContainer bd, String nombre, int duracion, Cantante cantante) {
