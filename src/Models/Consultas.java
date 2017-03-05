@@ -3,21 +3,13 @@ package Models;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.ext.Db4oException;
-import com.db4o.query.Query;
-
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 public class Consultas {
 
-//    public void x(ObjectContainer bd) {}
     /**
      * ***********BASICO DE CANCIONES**************
-     */
-    /**
-     * Recogemos todas las canciones de la base de datos.
-     *
-     * @param bd ObjectContainer
-     * @return ArrayList<Canciones>
      */
     public ArrayList<Canciones> mostrarCanciones(ObjectContainer bd) {
         ArrayList<Canciones> canciones = new ArrayList<>();
@@ -26,11 +18,30 @@ public class Consultas {
         return canciones;
     }
 
+    public DefaultTableModel tablaCanciones(ObjectContainer bd) {
+        DefaultTableModel tablita = new DefaultTableModel();
+
+        tablita.addColumn("Titulo");
+        tablita.addColumn("Duracion");
+        tablita.addColumn("Cantante");
+
+        Object[] fila = new Object[3];
+
+        ArrayList<Canciones> canciones = mostrarCanciones(bd);
+        for (Canciones e : canciones) {
+            fila[0] = e.getTitulo();
+            fila[1] = e.getDuracion();
+            fila[2] = e.getCantante().getNombre();
+
+            tablita.addRow(fila);
+        }
+
+        return tablita;
+    }
+
     public boolean insertCanciones(ObjectContainer bd, String nombre, int duracion, Cantante cantante) {
         Canciones cancion = new Canciones(nombre, duracion);
         cancion.setCantante(cantante);
-        // TODO: fix this duplicated code
-        //noinspection Duplicates
         try {
             bd.store(cancion);
             bd.commit();
@@ -41,23 +52,11 @@ public class Consultas {
         }
     }
 
-    /**
-     * Recibe una cancion y los parametros para su modificación.
-     *
-     * @param bd            ObjectContainer
-     * @param cancion       Canciones
-     * @param nuevoTitulo   String
-     * @param nuevaDuracion int
-     * @param nuevoCantante Cantante
-     * @return boolean
-     */
     public boolean modificarCanciones(ObjectContainer bd, Canciones cancion, String nuevoTitulo, int nuevaDuracion, Cantante nuevoCantante) {
         Canciones cancionActualizar = (Canciones) bd.queryByExample(cancion).next();
         cancionActualizar.setTitulo(nuevoTitulo);
         cancionActualizar.setDuracion(nuevaDuracion);
         cancionActualizar.setCantante(nuevoCantante);
-        // TODO: fix this duplicated code
-        //noinspection Duplicates
         try {
             bd.store(cancionActualizar);
             bd.commit();
@@ -68,13 +67,6 @@ public class Consultas {
         }
     }
 
-    /**
-     * Borra una canción de la BBDD.
-     *
-     * @param bd      ObjectContainer
-     * @param cancion Canciones
-     * @return boolean
-     */
     public boolean borrarCanciones(ObjectContainer bd, Canciones cancion) {
         try {
             bd.delete(bd.queryByExample(cancion));
@@ -89,12 +81,6 @@ public class Consultas {
     /**
      * ***********BASICO DE CANTANTES**************
      */
-    /**
-     * Recoge todos los cantantes de la BD.
-     *
-     * @param bd ObjectContainer
-     * @return ArrayList<Cantante>
-     */
     public ArrayList<Cantante> mostrarCantantes(ObjectContainer bd) {
         ArrayList<Cantante> cantantes = new ArrayList<>();
         ObjectSet<Cantante> set = bd.queryByExample(new Cantante("Manuel", "Flamenco"));
@@ -102,18 +88,23 @@ public class Consultas {
         return cantantes;
     }
 
-    /**
-     * Inserta un nuevo cantante en la BD.
-     *
-     * @param bd            ObjectContainer
-     * @param nombre        String
-     * @param estiloMusical String
-     * @return boolean
-     */
+    public DefaultTableModel tablaCantantes(ObjectContainer bd) {
+        DefaultTableModel tablita = new DefaultTableModel();
+        tablita.addColumn("Nombre");
+        tablita.addColumn("Estilo Musical");
+        Object[] fila = new Object[2];
+
+        ArrayList<Cantante> cantantes = mostrarCantantes(bd);
+        for (Cantante e : cantantes) {
+            fila[0] = e.getNombre();
+            fila[1] = e.getEstiloMusical();
+            tablita.addRow(fila);
+        }
+        return tablita;
+    }
+
     public boolean insertarCantantes(ObjectContainer bd, String nombre, String estiloMusical) {
         Cantante cantante = new Cantante(nombre, estiloMusical);
-        // TODO: fix this duplicated code
-        //noinspection Duplicates
         try {
             bd.store(cantante);
             bd.commit();
@@ -128,8 +119,6 @@ public class Consultas {
         Cantante cantanteActualizar = (Cantante) bd.queryByExample(cantante).next();
         cantante.setNombre(nuevoNombre);
         cantante.setEstiloMusical(nuevoEstiloMusical);
-        // TODO: fix this duplicated code
-        //noinspection Duplicates
         try {
             bd.store(cantanteActualizar);
             bd.commit();
@@ -140,16 +129,7 @@ public class Consultas {
         }
     }
 
-    /**
-     * Borra un cantante de la BD.
-     *
-     * @param bd       ObjectContainer
-     * @param cantante Cantante
-     * @return boolean
-     */
     public boolean borrarCantantes(ObjectContainer bd, Cantante cantante) {
-        // TODO: fix this duplicated code
-        //noinspection Duplicates
         try {
             bd.delete(bd.queryByExample(cantante));
             bd.commit();
@@ -163,13 +143,6 @@ public class Consultas {
     /**
      * ***********ADICIONALES**************
      */
-    /**
-     * Devuelve una lista de canciones por su titulo.
-     *
-     * @param bd            ObjectContainer
-     * @param nombreCancion String
-     * @return ArrayList<Canciones>
-     */
     public ArrayList<Canciones> buscaCancionNombre(ObjectContainer bd, String nombreCancion) {
         ArrayList<Canciones> canciones = new ArrayList<>();
         ObjectSet<Canciones> set = bd.queryByExample(new Canciones(nombreCancion, 0));
@@ -177,13 +150,6 @@ public class Consultas {
         return canciones;
     }
 
-    /**
-     * Busca canciones por nombre del cantante.
-     *
-     * @param bd             ObjectContainer
-     * @param nombreCantante String
-     * @return ArrayList<Canciones>
-     */
     public ArrayList<Canciones> buscaCantanteNombre(ObjectContainer bd, String nombreCantante) {
         ArrayList<Canciones> canciones = new ArrayList<>();
         Canciones cancionQuery = new Canciones(null, 0);
@@ -193,16 +159,6 @@ public class Consultas {
         return canciones;
     }
 
-
-    /**
-     * DB4O no tiene para buscar entre dos valores, solo mayores o menores pero una combinación de estos.
-     * Es mas rapido recogerlas todas y hacer el filtro en el código.
-     *
-     * @param bd        ObjectContainer
-     * @param valorAlto int
-     * @param valorBajo int
-     * @return ArrayList<Canciones>
-     */
     public ArrayList<Canciones> buscaCancionDuracion(ObjectContainer bd, int valorAlto, int valorBajo) {
         ArrayList<Canciones> canciones = new ArrayList<>();
         ObjectSet<Canciones> set = bd.queryByExample(new Canciones(null, 0));
@@ -214,12 +170,3 @@ public class Consultas {
         return canciones;
     }
 }
-
-//    jbutton.actionlistener (ObjectContainer bd) {
-//
-//        Canciones c1 = new canciones("", 123);
-//        Cantante canta1 = new cantante();
-//        c1.setcantante(canta1);
-//
-//        bd.store(c1);
-//    }

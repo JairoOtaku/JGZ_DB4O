@@ -3,12 +3,22 @@ package Models;
 public class Canciones {
 
     private String Titulo;
-    private float Duracion;
+    private int Duracion;
     private Cantante cantante;
 
-    public Canciones(String Titulo, float Duracion) {
+    public Canciones(String Titulo, int Duracion) {
         this.Titulo = Titulo;
         this.Duracion = Duracion;
+    }
+
+    public Canciones(String Titulo, int Duracion, Cantante cantante) {
+        this.Titulo = Titulo;
+        this.Duracion = Duracion;
+        this.cantante = cantante;
+    }
+
+    public Canciones() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -20,7 +30,7 @@ public class Canciones {
         this.Titulo = Titulo;
     }
 
-    public void setDuracion(float Duracion) {
+    public void setDuracion(int Duracion) {
         this.Duracion = Duracion;
     }
 

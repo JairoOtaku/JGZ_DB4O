@@ -11,6 +11,10 @@ public class Cantante {
         this.EstiloMusical = EstiloMusical;
     }
 
+    public Cantante() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @Override
     public String toString() {
         return "Cantante{" + "Nombre=" + Nombre + ", EstiloMusical=" + EstiloMusical + '}';
