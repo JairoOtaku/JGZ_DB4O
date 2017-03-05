@@ -47,6 +47,7 @@ public class Controller {
             accion = 2;
         });
         vista.delcancion.addActionListener((ActionEvent ActionEvent) -> {
+
             boolean deleteOk = consulta.borrarCanciones(bd, listaCanciones.get(0));
             if (!deleteOk) {
                 JOptionPane.showMessageDialog(vista, "Error al borrar la canción", "Error", JOptionPane.ERROR_MESSAGE);
