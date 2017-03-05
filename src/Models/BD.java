@@ -13,5 +13,4 @@ public class BD {
         ObjectContainer bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), basededatos);
         return bd;
     }
-
 }

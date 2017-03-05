@@ -139,34 +139,4 @@ public class Consultas {
             return false;
         }
     }
-
-    /**
-     * ***********ADICIONALES**************
-     */
-    public ArrayList<Canciones> buscaCancionNombre(ObjectContainer bd, String nombreCancion) {
-        ArrayList<Canciones> canciones = new ArrayList<>();
-        ObjectSet<Canciones> set = bd.queryByExample(new Canciones(nombreCancion, 0));
-        set.forEach(canciones::add);
-        return canciones;
-    }
-
-    public ArrayList<Canciones> buscaCantanteNombre(ObjectContainer bd, String nombreCantante) {
-        ArrayList<Canciones> canciones = new ArrayList<>();
-        Canciones cancionQuery = new Canciones(null, 0);
-        cancionQuery.setCantante(new Cantante(nombreCantante, null));
-        ObjectSet<Canciones> set = bd.queryByExample(cancionQuery);
-        set.forEach(canciones::add);
-        return canciones;
-    }
-
-    public ArrayList<Canciones> buscaCancionDuracion(ObjectContainer bd, int valorAlto, int valorBajo) {
-        ArrayList<Canciones> canciones = new ArrayList<>();
-        ObjectSet<Canciones> set = bd.queryByExample(new Canciones(null, 0));
-        set.forEach((can) -> {
-            if (can.getDuracion() < valorAlto && can.getDuracion() > valorBajo) {
-                set.add(can);
-            }
-        });
-        return canciones;
-    }
 }

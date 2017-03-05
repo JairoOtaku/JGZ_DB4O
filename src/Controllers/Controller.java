@@ -89,6 +89,7 @@ public class Controller {
                     listaCanciones = consulta.mostrarCanciones(bd);
                     vista.tablaCanciones.setModel(consulta.tablaCanciones(bd));
                     vista.tablaCantante.setModel(consulta.tablaCantantes(bd));
+                    resetDialog();
                     break;
                 case 2://UPDATECANCION
                     Cantante cantaor2 = new Cantante(namecantante, estilo);
@@ -101,6 +102,7 @@ public class Controller {
                     listaCanciones = consulta.mostrarCanciones(bd);
                     vista.tablaCanciones.setModel(consulta.tablaCanciones(bd));
                     vista.tablaCantante.setModel(consulta.tablaCantantes(bd));
+                    resetDialog();
                     break;
                 case 3://INSERTARCANTANTE
                     Cantante cantaor3 = new Cantante(namecantante, estilo);
@@ -113,6 +115,8 @@ public class Controller {
                     listaCantantes = consulta.mostrarCantantes(bd);
                     vista.tablaCanciones.setModel(consulta.tablaCanciones(bd));
                     vista.tablaCantante.setModel(consulta.tablaCantantes(bd));
+                    resetDialog();
+
                     break;
                 case 4://UPDATECANTANTE
                     Cantante cantaor4 = new Cantante(namecantante, estilo);
@@ -127,24 +131,12 @@ public class Controller {
                     vista.tablaCantante.setModel(consulta.tablaCantantes(bd));
                     break;
                 default:
-                    vista.txtNameCancion.setText("");
-                    vista.txtDuracion.setText("");
-                    vista.txtNameCantante.setText("");
-                    vista.txtEstiloM.setText("");
-                    accion = 0;
-                    jdp.dispose();
+                    resetDialog();
                     break;
             }
         });
         vista.btnCancelar.addActionListener((ActionEvent actionEvent) -> {
-            vista.txtNameCancion.setText("");
-            vista.txtDuracion.setText("");
-            vista.txtNameCantante.setText("");
-            vista.txtEstiloM.setText("");
-            accion = 0;
-            vista.tablaCanciones.setModel(consulta.tablaCanciones(bd));
-            vista.tablaCantante.setModel(consulta.tablaCantantes(bd));
-            jdp.dispose();
+            resetDialog();
         });
 
         vista.tablaCanciones.setModel(consulta.tablaCanciones(bd));
@@ -153,4 +145,14 @@ public class Controller {
         vista.setVisible(true);
     }
 
+    public void resetDialog() {
+        vista.txtNameCancion.setText("");
+        vista.txtDuracion.setText("");
+        vista.txtNameCantante.setText("");
+        vista.txtEstiloM.setText("");
+        accion = 0;
+        vista.tablaCanciones.setModel(consulta.tablaCanciones(bd));
+        vista.tablaCantante.setModel(consulta.tablaCantantes(bd));
+        jdp.dispose();
+    }
 }
